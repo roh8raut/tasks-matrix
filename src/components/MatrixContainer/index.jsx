@@ -1,12 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import './matrix.css';
 import { useAppContext } from '../context/App/AppProvider';
 import { TASKS_TYPES } from '../../constants';
-import TaskList from '../common/TaskList';
+import TasksList from './TasksList';
+
+import './matrix.css';
 
 const MatrixContainer = (props) => {
-  const { tasks, taskDeleteHandler } = useAppContext();
+  const { tasks, taskDeleteHandler, taskEditHandler } = useAppContext();
+
   const U_I = tasks.filter(
     (task) => task.type === TASKS_TYPES.important && task.priority === TASKS_TYPES.urgent
   );
@@ -31,35 +32,35 @@ const MatrixContainer = (props) => {
         <div className="middle-layer flex flex-1">
           <div className="w-24 rotate-text">Important</div>
           <div className="square important-urgent">
-            <ul>
-              {U_I.map((task, index) => (
-                <TaskList id={task.id} value={task.name} taskDeleteHandler={taskDeleteHandler} />
-              ))}
-            </ul>
+            <TasksList
+              tasks={U_I}
+              taskDeleteHandler={taskDeleteHandler}
+              taskEditHandler={taskEditHandler}
+            />
           </div>
           <div className="square">
-            <ul>
-              {N_U_I.map((task, index) => (
-                <TaskList id={task.id} value={task.name} taskDeleteHandler={taskDeleteHandler} />
-              ))}
-            </ul>
+            <TasksList
+              tasks={N_U_I}
+              taskDeleteHandler={taskDeleteHandler}
+              taskEditHandler={taskEditHandler}
+            />
           </div>
         </div>
         <div className="bottom-layer flex flex-1">
           <div className="w-24 rotate-text">Not Important</div>
           <div className="square">
-            <ul>
-              {U_N_I.map((task, index) => (
-                <TaskList id={task.id} value={task.name} taskDeleteHandler={taskDeleteHandler} />
-              ))}
-            </ul>
+            <TasksList
+              tasks={U_N_I}
+              taskDeleteHandler={taskDeleteHandler}
+              taskEditHandler={taskEditHandler}
+            />
           </div>
           <div className="square">
-            <ul>
-              {N_U_N_I.map((task, index) => (
-                <TaskList id={task.id} value={task.name} taskDeleteHandler={taskDeleteHandler} />
-              ))}
-            </ul>
+            <TasksList
+              tasks={N_U_N_I}
+              taskDeleteHandler={taskDeleteHandler}
+              taskEditHandler={taskEditHandler}
+            />
           </div>
         </div>
       </div>
